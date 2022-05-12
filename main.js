@@ -440,6 +440,7 @@ function finish() {
     setTimeout(() => {
         grid.classList.remove('grid-border');
     }, 500);
+    calculateAllResult();
     document.getElementById('results').classList.remove('hidden');
     colorCircles();
     getGrey();
@@ -521,19 +522,27 @@ function passResults () {
     document.getElementById('Q').innerHTML += `Qt = ${Q.reduce((sum,a) => sum + a, 0)} `;
 }
 
+// document.getElementById('A')
+function calculateAllResult () {
+    let A = [];
+    for(let i = 0; i < M.length; i++) {
+        document.getElementById('A').innerHTML += `A${i+1} = ${(M[i]-N[i])/M[i]}`;
+        A.push((M[i]-N[i])/M[i]);
+    }
+    document.getElementById('A').innerHTML += `At = ${A.reduce((sum,a) => sum + a, 0)/A.length} `;
 
+    let P = [];
+    for(let i = 0; i < A.length; i++) {
+        document.getElementById('P').innerHTML += `P${i+1} = ${A[i] * Q[i]}`;
+        P.push(A[i] * Q[i]);
+    }
+    document.getElementById('P').innerHTML += `Pt = ${P.reduce((sum,a) => sum + a, 0)/P.length} `;
 
-// var thenum;
+    document.getElementById('S').innerHTML = 
+    (0.54 * Q.reduce((sum,a) => sum + a, 0) - 2.8 * N.reduce((sum,a) => sum + a, 0))/300;
 
-// thenum = "foo35bar5".match(/\d+/)[0];
+    document.getElementById('K').innerHTML = 5 * ((P[0] - P[P.length-1])/P.reduce((sum,a) => sum + a, 0)/P.length) * 100;
 
-// console.log(thenum);
+    document.getElementById('T').innerHTML = ((A[0] - A[A.length-1])/A.reduce((sum,a) => sum + a, 0)/A.length) * 100;
 
-// console.log(document.getElementById('child').parentElement);
-
-
-// location.href = "#";
-
-// document.getElementById('#results').scrollIntoView({
-//     behavior: 'smooth'
-//   });
+}
